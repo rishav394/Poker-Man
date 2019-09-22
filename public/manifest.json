@@ -1,0 +1,51 @@
+{
+	"name": "Poker Man",
+	"short_name": "Poker Man",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#FFE9D2",
+	"theme_color": "#FFE1C4",
+	"orientation": "portrait-primary",
+	"icons": [
+		{
+			"src": "/img/icons/icons8_chip_72x72.png",
+			"type": "image/png",
+			"sizes": "72x72"
+		},
+		{
+			"src": "/img/icons/icons8_chip_96x96.png",
+			"type": "image/png",
+			"sizes": "96x96"
+		},
+		{
+			"src": "/img/icons/icons8_chip_128px.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "/img/icons/icons8_chip_144px.png",
+			"type": "image/png",
+			"sizes": "144x144"
+		},
+		{
+			"src": "/img/icons/icons8_chip_152px.png",
+			"type": "image/png",
+			"sizes": "152x152"
+		},
+		{
+			"src": "/img/icons/icons8_chip_192px.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/img/icons/icons8_chip_384px.png",
+			"type": "image/png",
+			"sizes": "384x384"
+		},
+		{
+			"src": "/img/icons/icons8_chip_512px.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}

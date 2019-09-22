@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#FFE1C4">
+    <meta name="description"
+      content="Poker / Teen Patti table manager. Easily keep track of how much you and your friends owe each other.">
+    <title>Poker man</title>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- materialize icons, css & js -->
+    <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
+    <link href="/css/icon.css" rel="stylesheet">
+
+    <link type="text/css" href="/css/styles.css" rel="stylesheet">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <!-- iOS support -->
+    <link rel="apple-touch-icon" href="/img/icons/icons8_chip_96px.png">
+    <meta name="apple-mobile-web-app-status-bat" content="#AA7700">
+
+  </head>
+
+  <body class="grey lighten-4">
+
+    <nav class="z-depth-0">
+      <div class="nav-wrapper container">
+        <a href="/">POKER<span>Man</span></a>
+      </div>
+    </nav>
+
+    <!-- Standings -->
+    <div class="standings container row">
+
+    </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyActwHhViaT8LWRwrECcQdLqm1EgQwZIoU",
+        authDomain: "pokermanvit.firebaseapp.com",
+        databaseURL: "https://pokermanvit.firebaseio.com",
+        projectId: "pokermanvit",
+        storageBucket: "pokermanvit.appspot.com",
+        messagingSenderId: "764983247790",
+        appId: "1:764983247790:web:6a943d5dc7bd19850c3e3f"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
+    <script src="/js/db2.js"></script>
+    <script src="/js/ui2.js"></script>
+  </body>
+
+</html>
