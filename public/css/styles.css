@@ -5,6 +5,16 @@
 	--title: #ff2516;
 }
 
+/* NProgress */
+#nprogress .bar {
+	background: rgb(255, 167, 66);
+}
+
+#nprogress .spinner-icon {
+	border-top-color: red;
+	border-left-color: red;
+}
+
 /* layout styles */
 nav {
 	background: var(--primary);

@@ -10,25 +10,24 @@
       content="Poker / Teen Patti table manager. Easily keep track of how much you and your friends owe each other.">
     <title>Poker man</title>
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/myfav.ico" type="image/x-icon">
 
-    <!-- materialize icons, css & js -->
+    <!-- NProgress css -->
+    <link rel="stylesheet" href="/css/nprogress.css">
+
+    <!-- materialize icons, css -->
     <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
     <link href="/css/icon.css" rel="stylesheet">
-
     <link type="text/css" href="/css/styles.css" rel="stylesheet">
-
     <link rel="manifest" href="/manifest.json">
-
-    <script type="text/javascript" src="/js/materialize.min.js"></script>
 
     <!-- iOS support -->
     <link rel="apple-touch-icon" href="/img/icons/icons8_chip_96px.png">
     <meta name="apple-mobile-web-app-status-bat" content="#AA7700">
-
   </head>
 
   <body class="grey lighten-4">
+    <!-- Main nav bar -->
     <nav class="z-depth-0">
       <div class="nav-wrapper container">
         <a href="/">POKER<span>Man</span></a>
@@ -43,7 +42,7 @@
       <form class="add-table container section" autocomplete="new-password">
         <h6 class="center accent-1 red-text">New Player</h6>
         <div class="input-field">
-          <input placeholder="e.g. Noob Master 69" id="title" type="text" class="validate" autocomplete="new-password">
+          <input placeholder="e.g. Noob Master 69" id="title" type="password" class="validate">
           <label for="title">Name</label>
         </div>
         <div class="input-field center">
@@ -72,6 +71,12 @@
       <p class="grey-text text-darken-3">Reset Table</p>
     </div>
 
+    <!-- Set input type back to text to avoid chrome's nasty autofill -->
+    <script>document.querySelector('input[type="password"]').setAttribute('type', 'text')</script>
+
+    <!-- Materialize js -->
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
@@ -91,9 +96,12 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
     </script>
+    <!-- NProgress js -->
+    <script src="/js/nprogress.js"></script>
     <script src="/js/db.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/ui.js"></script>
+
   </body>
 
 </html>

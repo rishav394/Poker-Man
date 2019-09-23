@@ -69,8 +69,6 @@ self.addEventListener('fetch', (evt) => {
 										evt.request.url,
 										fetchRes.clone(),
 									);
-									// check cached items size
-									limitCacheSize(dynamicCacheName, 15);
 									return fetchRes;
 								});
 						})

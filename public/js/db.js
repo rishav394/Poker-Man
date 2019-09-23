@@ -25,21 +25,30 @@ db.collection('players').onSnapshot((snapshot) => {
 
 // Add new player
 const addToCollection = (player) => {
+	NProgress.start();
 	db.collection('players')
 		.add(player)
-		.then(() => console.log('Document added successfully!'))
+		.then(() => {
+			NProgress.done();
+			console.log('Document added successfully!');
+		})
 		.catch((err) => console.log(err));
 };
 
 // Delete player
 const deleteFromCollection = (id) => {
+	NProgress.start();
 	db.collection('players')
 		.doc(id)
 		.delete()
-		.then(() => console.log('Document deleted successfully!'));
+		.then(() => {
+			NProgress.done();
+			console.log('Document deleted successfully!');
+		});
 };
 
 const win = (winner, kvps) => {
+	NProgress.start();
 	var winnings = 0;
 	// Update Loosers
 	kvps.map((kvp) => {
@@ -83,6 +92,7 @@ const win = (winner, kvps) => {
 						balance: oldBal + winnings,
 					})
 					.then(function() {
+						NProgress.done();
 						console.log('Winner awarded successfully!');
 					})
 					.catch(function(error) {
