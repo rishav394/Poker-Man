@@ -1,5 +1,5 @@
 let currentPot = 1;
-let startingPot = 0; // In case of someone leaves change it to 0
+let startingPot = 1; // In case of someone leaves change it to 0
 let password = '';
 const table = document.querySelector('.players.container');
 const tableAdder = document.querySelector('.add-table');
@@ -16,15 +16,19 @@ setInterval(() => {
 
 document.addEventListener('DOMContentLoaded', function() {
 	M.Sidenav.init(forms, { edge: 'right' });
-
+	startingPotInput.value = startingPot;
+	currentPotInput.value = currentPot;
 	resetButton.onclick = resetTable;
 
 	currentPotInput.onchange = (event) => {
 		currentPot = parseInt(event.target.value || currentPot || 1);
+		currentPot = currentPot === 0 ? 1 : currentPot;
+		currentPotInput.value = currentPot;
 	};
 
 	startingPotInput.onchange = (event) => {
 		startingPot = parseInt(event.target.value || startingPot || 0);
+		startingPotInput.value = startingPot;
 	};
 
 	// On player addition
@@ -36,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				balance: 0,
 				wins: 0,
 				losses: 0,
+				position: document.querySelectorAll('.player').length,
 			};
 			// Linking DB
 			addToCollection(player);
@@ -177,9 +182,9 @@ const removePlayer = (id) => {
 	document.querySelector(`.player[data-id="${id}"]`).remove();
 };
 
-const resetTable = (event) => {
-	currentPot = startingPot;
-	currentPotInput.value = startingPot;
+const resetTable = (_event) => {
+	currentPot = startingPot === 0 ? 1 : startingPot;
+	currentPotInput.value = currentPot;
 	document
 		.querySelectorAll('h3')
 		.forEach((dom) => (dom.innerHTML = startingPot));

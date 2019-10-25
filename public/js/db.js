@@ -10,19 +10,21 @@ db.enablePersistence().catch(function(err) {
 });
 
 // real-time listener
-db.collection('players').onSnapshot((snapshot) => {
-	snapshot.docChanges().forEach((change) => {
-		if (change.type === 'added') {
-			renderPlayer(change.doc.data().name, change.doc.id);
-		}
-		if (change.type === 'removed') {
-			removePlayer(change.doc.id);
-		}
-		if (change.type === 'modified') {
-			modifyPlayer(change.doc.data().name, change.doc.id);
-		}
+db.collection('players')
+	.orderBy('position', 'asc')
+	.onSnapshot((snapshot) => {
+		snapshot.docChanges().forEach((change) => {
+			if (change.type === 'added') {
+				renderPlayer(change.doc.data().name, change.doc.id);
+			}
+			if (change.type === 'removed') {
+				removePlayer(change.doc.id);
+			}
+			if (change.type === 'modified') {
+				modifyPlayer(change.doc.data().name, change.doc.id);
+			}
+		});
 	});
-});
 
 // Change player name
 const dbModifyPlayer = (newName, id) => {

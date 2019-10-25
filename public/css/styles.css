@@ -100,7 +100,7 @@ p {
 
 h3.col {
 	color: #7d2dfd;
-	text-transform: capitalize;
+	text-transform: uppercase;
 }
 
 input#pot,
@@ -110,4 +110,10 @@ input#starting {
 
 #side-menu > form > div.input-field.center {
 	margin: 14px;
+}
+
+/* Disable amount going in next line */
+div.row h3 {
+	white-space: nowrap;
+	text-overflow: clip;
 }
