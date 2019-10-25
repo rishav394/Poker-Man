@@ -19,9 +19,25 @@ db.collection('players').onSnapshot((snapshot) => {
 			removePlayer(change.doc.id);
 		}
 		if (change.type === 'modified') {
+			modifyPlayer(change.doc.data().name, change.doc.id);
 		}
 	});
 });
+
+// Change player name
+const dbModifyPlayer = (newName, id) => {
+	NProgress.start();
+	db.collection('players')
+		.doc(id)
+		.update({
+			name: newName,
+		})
+		.then(() => {
+			NProgress.done();
+			console.log('Player name changed');
+		})
+		.catch((err) => console.error(err));
+};
 
 // Add new player
 const addToCollection = (player) => {
@@ -58,9 +74,12 @@ const win = (winner, kvps) => {
 			.get()
 			.then(function(doc) {
 				if (doc.exists) {
-					var oldBal = doc.data().balance;
+					var tempData = doc.data();
+					var oldBal = tempData.balance;
+					var oldLoss = tempData.losses;
 					docRef
 						.update({
+							losses: oldLoss + 1,
 							balance: oldBal - kvp.amount,
 						})
 						.then(function() {
@@ -86,9 +105,12 @@ const win = (winner, kvps) => {
 		.get()
 		.then(function(doc) {
 			if (doc.exists) {
-				var oldBal = doc.data().balance;
+				var tempData = doc.data();
+				var oldBal = tempData.balance;
+				var oldWins = tempData.wins;
 				docRef
 					.update({
+						wins: oldWins + 1,
 						balance: oldBal + winnings,
 					})
 					.then(function() {

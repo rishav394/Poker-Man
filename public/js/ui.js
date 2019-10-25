@@ -1,10 +1,14 @@
-let minPot = 1;
+let currentPot = 1;
+let startingPot = 0; // In case of someone leaves change it to 0
 let password = '';
 const table = document.querySelector('.players.container');
 const tableAdder = document.querySelector('.add-table');
 const forms = document.querySelectorAll('.side-form');
-const minPotInput = document.getElementById('pot');
+const currentPotInput = document.getElementById('pot');
+const startingPotInput = document.getElementById('starting');
 const resetButton = document.getElementById('reset');
+const deletePassword = 'ok';
+const pokerMasterPassword = 'ok';
 
 setInterval(() => {
 	password = '';
@@ -15,16 +19,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	resetButton.onclick = resetTable;
 
-	minPotInput.onchange = (event) => {
-		minPot = parseInt(event.target.value);
+	currentPotInput.onchange = (event) => {
+		currentPot = parseInt(event.target.value || currentPot || 1);
 	};
 
+	startingPotInput.onchange = (event) => {
+		startingPot = parseInt(event.target.value || startingPot || 0);
+	};
+
+	// On player addition
 	tableAdder.addEventListener('submit', (event) => {
 		event.preventDefault();
 		if (tableAdder.title.value.length > 3) {
 			const player = {
 				name: tableAdder.title.value,
 				balance: 0,
+				wins: 0,
+				losses: 0,
 			};
 			// Linking DB
 			addToCollection(player);
@@ -32,8 +43,52 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 
-	// On buttons click
+	// On name change
+	var timer;
+	var touchduration = 800;
+
+	const longTouchEvent = new CustomEvent('longtouch', {
+		bubbles: true,
+	});
+
+	function touchstart(event) {
+		timer = setTimeout(
+			() => event.target.dispatchEvent(longTouchEvent),
+			touchduration,
+		);
+	}
+
+	function touchend() {
+		if (timer) clearTimeout(timer);
+	}
+
+	table.addEventListener('longtouch', (event) => {
+		if (event.target.tagName === 'STRONG') {
+			let oldName = event.target.childNodes[0].data;
+			let id = event.target.children[0].children[0].getAttribute(
+				'data-id',
+			);
+			var newName = prompt('Enter new name', oldName);
+			if (newName !== oldName && newName) {
+				dbModifyPlayer(newName, id);
+			}
+		}
+	});
+
+	table.addEventListener('touchstart', (event) => {
+		if (event.target.tagName === 'STRONG') {
+			touchstart(event);
+		}
+	});
+
+	table.addEventListener('touchend', (event) => {
+		if (event.target.tagName === 'STRONG') {
+			touchend();
+		}
+	});
+
 	table.addEventListener('click', (event) => {
+		// On buttons click
 		if (event.target.tagName === 'BUTTON' || event.target.tagName === 'I') {
 			let type = event.target.outerText;
 			let id = event.target.getAttribute('data-id');
@@ -41,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Add to POT
 			if (type === 'monetization_on') {
 				let val = document.querySelector(`h3[data-id="${id}"]`);
-				val.innerHTML = parseInt(val.innerHTML) + minPot;
+				val.innerHTML = parseInt(val.innerHTML) + currentPot;
 			}
 			// Pack
 			else if (type === 'sentiment_dissatisfied') {
@@ -59,13 +114,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Win
 			else if (type === 'mood') {
 				winUI(id);
-			} else if (type == 'delete') {
+			}
+			// Remove player
+			else if (type == 'delete') {
 				// Linking DB
 				password =
-					password === 'ok' ? 'ok' : window.prompt('Enter password');
-				if (password === 'ok') deleteFromCollection(id);
+					password === deletePassword
+						? deletePassword
+						: window.prompt('Enter password');
+				if (password === deletePassword) deleteFromCollection(id);
 			}
 		}
+
+		// On name change
 	});
 });
 
@@ -93,7 +154,7 @@ const renderPlayer = (name, id) => {
           </button>
 
           <!-- Spent -->
-          <h3 data-id="${id}" class="center blue-text text-darken-5">${minPot}</h3>
+          <h3 data-id="${id}" class="center blue-text text-darken-5">${startingPot}</h3>
         </div>
       </div>
       <!-- Player end -->
@@ -101,13 +162,27 @@ const renderPlayer = (name, id) => {
 	table.innerHTML += player;
 };
 
+const modifyPlayer = (newName, id) => {
+	const target = document.querySelector(`div[data-id="${id}"] strong`);
+	target.innerHTML =
+		newName +
+		'<' +
+		target.innerHTML
+			.split('<')
+			.slice(1)
+			.join('<');
+};
+
 const removePlayer = (id) => {
 	document.querySelector(`.player[data-id="${id}"]`).remove();
 };
 
 const resetTable = (event) => {
-	minPot = 1;
-	document.querySelectorAll('h3').forEach((dom) => (dom.innerHTML = 1));
+	currentPot = startingPot;
+	currentPotInput.value = startingPot;
+	document
+		.querySelectorAll('h3')
+		.forEach((dom) => (dom.innerHTML = startingPot));
 	document
 		.querySelectorAll('button')
 		.forEach((dom) => dom.classList.remove('disabled'));

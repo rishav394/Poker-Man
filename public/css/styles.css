@@ -91,3 +91,23 @@ h3 {
 	margin-bottom: 10px;
 	text-transform: capitalize;
 }
+
+p {
+	margin-top: 0;
+	margin-bottom: 2px;
+	margin-right: 10px;
+}
+
+h3.col {
+	color: #7d2dfd;
+	text-transform: capitalize;
+}
+
+input#pot,
+input#starting {
+	text-align: center;
+}
+
+#side-menu > form > div.input-field.center {
+	margin: 14px;
+}
